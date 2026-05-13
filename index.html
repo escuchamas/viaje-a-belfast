@@ -74,19 +74,7 @@
     .doc-card ul li.warn::before{content:"⚠ ";color:#e3b341;}
     .doc-card ul li.no::before{content:"✗ ";color:var(--red);}
 
-    /* INSURANCE URGENT */
-    .ins-urgent{background:linear-gradient(135deg,rgba(248,81,73,.1),rgba(248,81,73,.04));border:2px solid rgba(248,81,73,.45);border-radius:1rem;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
-    .ins-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem;}
-    .ins-ico{font-size:1.8rem;flex-shrink:0;}
-    .ins-urgent h3{font-size:.95rem;font-weight:700;color:var(--red);}
-    .ins-urgent .ins-sub{font-size:.78rem;color:var(--muted);margin-top:.15rem;line-height:1.55;}
-    .ins-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.6rem;margin-top:.9rem;}
-    .ins-opt{background:rgba(255,255,255,.04);border:1px solid rgba(248,81,73,.2);border-radius:.65rem;padding:.8rem;}
-    .ins-opt h4{font-size:.82rem;font-weight:600;margin-bottom:.2rem;}
-    .ins-opt p{font-size:.72rem;color:var(--muted);line-height:1.45;}
-    .ins-price{display:inline-block;margin-top:.4rem;font-size:.67rem;color:var(--green);border:1px solid rgba(63,185,80,.3);border-radius:999px;padding:.1rem .45rem;}
-    .ins-cover{margin-top:.9rem;font-size:.76rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(248,81,73,.15);padding-top:.9rem;}
-    .ins-cover strong{color:var(--text);}
+
 
     /* BORDER GRID */
     .border-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1.5rem;}
@@ -240,7 +228,6 @@
       .day-dot{left:-28px;width:14px;height:14px;}
       .day-dot::after{width:6px;height:6px;}
       .ds-item{grid-template-columns:62px 1fr;}
-      .ins-opts{grid-template-columns:1fr 1fr;}
     }
   </style>
 </head>
@@ -306,27 +293,6 @@
   <div class="doc-card"><div class="di">📄</div><h4>Confirmaciones</h4><p>Descarga offline antes de salir.</p><ul><li>Confirmación vuelo</li><li>Reserva hotel (todas las noches)</li><li>Confirmación Europcar</li><li>Entradas: Titanic, Guinness Storehouse, Castle Ward, Carrick-a-Rede</li><li class="warn">Capturas sin internet</li></ul></div>
 </div>
 
-<!-- SEGURO URGENTE -->
-<div class="sh" id="seguro">
-  <div class="ey">Acción urgente requerida</div>
-  <h2>Seguro de viaje — No tenéis</h2>
-</div>
-<div class="ins-urgent">
-  <div class="ins-top">
-    <div class="ins-ico">🚨</div>
-    <div>
-      <h3>Sin seguro de viaje estáis desprotegidos en UK</h3>
-      <div class="ins-sub">La Tarjeta Sanitaria Europea (TSE) <strong style="color:var(--red)">NO cubre en Irlanda del Norte (Reino Unido)</strong> desde el Brexit. Cualquier urgencia médica en Belfast podría costaros cientos o miles de libras. Contratad un seguro antes de salir de España.</div>
-    </div>
-  </div>
-  <div class="ins-opts">
-    <div class="ins-opt"><h4>IATI Mochilero</h4><p>Cobertura médica ilimitada UK + Rep. Irlanda. Sin franquicia. App móvil muy buena.</p><div class="ins-price">~€18–25 · 5 días</div></div>
-    <div class="ins-opt"><h4>Chapka Cap Trip</h4><p>Muy popular entre viajeros. Cubre cancelaciones, equipaje y médico. Buena relación calidad/precio.</p><div class="ins-price">~€20–28 · 5 días</div></div>
-    <div class="ins-opt"><h4>AXA Viajes</h4><p>Gran asistencia en carretera — útil con coche de alquiler. Cobertura médica hasta 300.000€.</p><div class="ins-price">~€22–30 · 5 días</div></div>
-    <div class="ins-opt"><h4>Intermundial Go</h4><p>Opción económica con cobertura básica sólida. Disponible online en minutos. Contrato inmediato.</p><div class="ins-price">~€15–22 · 5 días</div></div>
-  </div>
-  <div class="ins-cover"><strong>El seguro debe cubrir:</strong> Asistencia médica en UK sin franquicia · Repatriación sanitaria · Cancelación del vuelo · Pérdida o robo de equipaje · Responsabilidad civil. <strong>En destino:</strong> 999 (emergencias) — guardad el teléfono de vuestra aseguradora en el móvil antes de salir.</div>
-</div>
 
 <!-- FRONTERA -->
 <div class="sh">
@@ -640,7 +606,7 @@
 
 <nav class="bottom-bar">
   <a href="#top"><span class="bbi">🏠</span>Inicio</a>
-  <a href="#seguro"><span class="bbi">🚨</span>Seguro</a>
+  <a href="#docs"><span class="bbi">📋</span>Docs</a>
   <a href="#alojamiento"><span class="bbi">🏨</span>Hotel</a>
   <a href="#day1" id="bb-hoy"><span class="bbi">📅</span>Hoy</a>
   <a href="#tips"><span class="bbi">💡</span>Tips</a>
