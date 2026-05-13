@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#0d1117"/>
+  <title>Belfast & Dublín · Junio 2026</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23c9a84c' stroke-width='2'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='34' font-family='serif'%3E🍀%3C/text%3E%3C/svg%3E"/>
+  <style>
+    :root {
+      --gold:#c9a84c; --dark:#0d1117; --card:#161b22; --card2:#1a2030;
+      --border:#30363d; --text:#e6edf3; --muted:#8b949e;
+      --green:#3fb950; --red:#f85149; --blue:#58a6ff; --orange:#f0883e;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--dark);color:var(--text);padding-bottom:calc(64px + env(safe-area-inset-bottom));}
+    a{color:inherit;text-decoration:none;}
+
+    /* HERO */
+    .hero{position:relative;height:100svh;min-height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:0 1.25rem;padding-top:env(safe-area-inset-top);background:linear-gradient(to bottom,rgba(13,17,23,.25) 0%,rgba(13,17,23,.85) 65%,var(--dark) 100%),url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Belfast_-_panoramio_%284%29.jpg/1280px-Belfast_-_panoramio_%284%29.jpg')center/cover no-repeat;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(201,168,76,.07),transparent 70%);}
+    .hero-badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;padding:.35rem 1.1rem;border-radius:999px;margin-bottom:1.2rem;position:relative;}
+    .hero h1{font-size:clamp(2.4rem,10vw,5.5rem);font-weight:800;line-height:1.05;position:relative;margin-bottom:.8rem;}
+    .hero h1 span{color:var(--gold);}
+    .hero-sub{font-size:clamp(.85rem,2.5vw,1rem);color:var(--muted);max-width:400px;line-height:1.65;position:relative;margin-bottom:1.75rem;}
+    .hero-pills{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;position:relative;}
+    .pill{background:rgba(255,255,255,.08);backdrop-filter:blur(8px);border:1px solid var(--border);border-radius:999px;padding:.35rem .85rem;font-size:.75rem;}
+    .scroll-cue{position:absolute;bottom:calc(1.5rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);color:var(--muted);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.3rem;animation:bounce 2s infinite;}
+    @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+    /* STICKY NAV */
+    .day-nav{position:sticky;top:0;z-index:200;background:rgba(13,17,23,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;padding:0 .5rem;padding-top:env(safe-area-inset-top);}
+    .day-nav::-webkit-scrollbar{display:none;}
+    .day-nav a{display:flex;flex-direction:column;align-items:center;gap:.1rem;padding:.55rem .85rem;font-size:.63rem;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;flex-shrink:0;}
+    .day-nav a .nd{font-size:.9rem;font-weight:700;color:var(--text);}
+    .day-nav a:hover,.day-nav a.active{color:var(--gold);border-bottom-color:var(--gold);}
+    .day-nav a:hover .nd,.day-nav a.active .nd{color:var(--gold);}
+
+    /* LAYOUT */
+    .container{max-width:980px;margin:0 auto;padding:0 1rem;}
+    .sh{text-align:center;padding:3rem 0 2rem;}
+    .sh .ey{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+    .sh h2{font-size:clamp(1.5rem,4vw,2.4rem);font-weight:700;letter-spacing:-.02em;margin-bottom:.7rem;}
+    .sh p{color:var(--muted);max-width:500px;margin:0 auto;line-height:1.7;font-size:.88rem;}
+
+    /* FLIGHT STRIP */
+    .flight-strip{background:linear-gradient(135deg,#1c2a1c,#162020);border:1px solid #2a4a2a;border-radius:1rem;padding:1.25rem 1.5rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.75rem;margin-bottom:1.5rem;}
+    .fi{display:flex;flex-direction:column;gap:.2rem;}
+    .fi.r{text-align:right;}
+    .fi .t{font-size:clamp(1.4rem,5vw,2rem);font-weight:700;}
+    .fi .c{color:var(--muted);font-size:.78rem;}
+    .fi .d{color:var(--green);font-size:.72rem;margin-top:.15rem;}
+    .fc{display:flex;flex-direction:column;align-items:center;gap:.25rem;}
+    .fl{display:flex;align-items:center;gap:.35rem;width:clamp(70px,12vw,120px);}
+    .fl hr{flex:1;border:none;border-top:1px dashed var(--border);}
+
+    /* BOXES */
+    .abox{background:rgba(248,81,73,.06);border:1px solid rgba(248,81,73,.3);border-radius:.875rem;padding:1rem 1.2rem;margin-bottom:1.2rem;display:flex;gap:.75rem;align-items:flex-start;}
+    .ibox{background:rgba(88,166,255,.06);border:1px solid rgba(88,166,255,.25);border-radius:.875rem;padding:1rem 1.2rem;margin-bottom:1.2rem;display:flex;gap:.75rem;align-items:flex-start;}
+    .sbox{background:rgba(63,185,80,.06);border:1px solid rgba(63,185,80,.25);border-radius:.875rem;padding:1rem 1.2rem;margin-bottom:1.2rem;display:flex;gap:.75rem;align-items:flex-start;}
+    .abox .bxi,.ibox .bxi,.sbox .bxi{font-size:1.1rem;flex-shrink:0;margin-top:.1rem;}
+    .abox p,.ibox p,.sbox p{font-size:.8rem;color:var(--muted);line-height:1.6;}
+    .abox strong,.ibox strong,.sbox strong{color:var(--text);}
+
+    /* DOCS */
+    .docs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.85rem;margin-bottom:1.5rem;}
+    .doc-card{background:var(--card);border:1px solid var(--border);border-radius:.875rem;padding:1.1rem;}
+    .doc-card .di{font-size:1.6rem;margin-bottom:.6rem;}
+    .doc-card h4{font-size:.88rem;font-weight:600;margin-bottom:.3rem;}
+    .doc-card p{font-size:.77rem;color:var(--muted);line-height:1.5;margin-bottom:.4rem;}
+    .doc-card ul{font-size:.77rem;color:var(--muted);list-style:none;line-height:1.85;}
+    .doc-card ul li::before{content:"✓ ";color:var(--green);font-weight:600;}
+    .doc-card ul li.warn::before{content:"⚠ ";color:#e3b341;}
+    .doc-card ul li.no::before{content:"✗ ";color:var(--red);}
+
+    /* INSURANCE URGENT */
+    .ins-urgent{background:linear-gradient(135deg,rgba(248,81,73,.1),rgba(248,81,73,.04));border:2px solid rgba(248,81,73,.45);border-radius:1rem;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+    .ins-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.9rem;}
+    .ins-ico{font-size:1.8rem;flex-shrink:0;}
+    .ins-urgent h3{font-size:.95rem;font-weight:700;color:var(--red);}
+    .ins-urgent .ins-sub{font-size:.78rem;color:var(--muted);margin-top:.15rem;line-height:1.55;}
+    .ins-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.6rem;margin-top:.9rem;}
+    .ins-opt{background:rgba(255,255,255,.04);border:1px solid rgba(248,81,73,.2);border-radius:.65rem;padding:.8rem;}
+    .ins-opt h4{font-size:.82rem;font-weight:600;margin-bottom:.2rem;}
+    .ins-opt p{font-size:.72rem;color:var(--muted);line-height:1.45;}
+    .ins-price{display:inline-block;margin-top:.4rem;font-size:.67rem;color:var(--green);border:1px solid rgba(63,185,80,.3);border-radius:999px;padding:.1rem .45rem;}
+    .ins-cover{margin-top:.9rem;font-size:.76rem;color:var(--muted);line-height:1.6;border-top:1px solid rgba(248,81,73,.15);padding-top:.9rem;}
+    .ins-cover strong{color:var(--text);}
+
+    /* BORDER GRID */
+    .border-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem;margin-bottom:1.5rem;}
+    .border-card{background:var(--card);border:1px solid var(--border);border-radius:.875rem;padding:1.1rem;}
+    .border-card h4{font-size:.82rem;font-weight:600;margin-bottom:.65rem;}
+    .border-card ul{font-size:.76rem;color:var(--muted);list-style:none;}
+    .border-card ul li{padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:.4rem;}
+    .border-card ul li:last-child{border:none;}
+    .border-card ul li .lb{color:var(--text);font-weight:500;white-space:nowrap;}
+
+    /* EUROPCAR */
+    .eu-card{background:linear-gradient(135deg,#1a1500,#2a2000);border:1px solid #4a3a00;border-radius:1rem;padding:1.25rem 1.5rem;margin-bottom:1.5rem;}
+    .eu-header{display:flex;align-items:center;gap:.85rem;margin-bottom:1rem;}
+    .eu-header .euico{font-size:2rem;}
+    .eu-header h3{font-size:.92rem;font-weight:600;color:var(--gold);}
+    .eu-header p{font-size:.75rem;color:var(--muted);margin-top:.15rem;}
+    .eu-details{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:.65rem;}
+    .eu-det{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:.6rem;padding:.75rem .9rem;}
+    .eu-det .el{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:.25rem;}
+    .eu-det .ev{font-size:.78rem;color:var(--text);line-height:1.5;}
+    .eu-det .ev a{color:var(--blue);text-decoration:underline;text-underline-offset:2px;}
+    .eu-warn{margin-top:.9rem;font-size:.76rem;color:var(--muted);}
+    .eu-warn strong{color:#e3b341;}
+
+    /* ACCOMMODATION */
+    .night-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:.85rem;margin-bottom:1.5rem;}
+    .night-card{background:var(--card);border:1px solid var(--border);border-radius:1rem;overflow:hidden;}
+    .night-hd{background:linear-gradient(135deg,#1a1f2e,#1e2538);padding:.85rem 1.1rem;border-bottom:1px solid var(--border);}
+    .night-hd .nt{display:flex;align-items:center;justify-content:space-between;margin-bottom:.25rem;}
+    .night-hd .nb{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);}
+    .night-hd .ns{font-size:.62rem;color:var(--red);border:1px solid rgba(248,81,73,.35);border-radius:999px;padding:.1rem .45rem;}
+    .night-hd h4{font-size:.9rem;font-weight:600;}
+    .night-hd .nsub{font-size:.72rem;color:var(--muted);margin-top:.15rem;}
+    .night-bd{padding:.9rem 1.1rem;}
+    .night-bd .nbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:.5rem;}
+    .ho{display:flex;align-items:baseline;justify-content:space-between;padding:.22rem 0;border-bottom:1px solid rgba(255,255,255,.04);gap:.4rem;}
+    .ho:last-child{border-bottom:none;}
+    .ho .hn{font-size:.79rem;color:var(--text);}
+    .ho .hp{font-size:.7rem;color:var(--gold);white-space:nowrap;}
+    .ho .ht{font-size:.66rem;color:var(--muted);}
+    .bnote{margin-top:.7rem;font-size:.72rem;color:var(--muted);line-height:1.5;border-top:1px solid rgba(255,255,255,.05);padding-top:.7rem;}
+    .bnote a{color:var(--blue);text-decoration:underline;text-underline-offset:2px;}
+
+    /* ROADMAP */
+    .roadmap{position:relative;padding-bottom:2rem;}
+    .roadmap::before{content:'';position:absolute;left:16px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--gold),rgba(201,168,76,.1));}
+    .day-block{position:relative;margin-left:44px;margin-bottom:1.2rem;}
+    .day-header{display:flex;align-items:center;gap:.85rem;cursor:pointer;padding:.9rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:.875rem;user-select:none;transition:border-color .2s,background .2s;min-height:58px;}
+    .day-header:active{background:#1c2130;}
+    .day-block.open .day-header{border-color:var(--gold);border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom-color:transparent;}
+    .day-dot{position:absolute;left:-33px;top:50%;transform:translateY(-50%);width:16px;height:16px;border-radius:50%;background:var(--dark);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;transition:border-color .25s;}
+    .day-dot::after{content:'';width:7px;height:7px;border-radius:50%;background:var(--border);transition:background .25s;}
+    .day-block.open .day-dot{border-color:var(--gold);}
+    .day-block.open .day-dot::after{background:var(--gold);}
+    .day-meta{flex:1;min-width:0;}
+    .day-label{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.15rem;}
+    .day-title{font-size:.9rem;font-weight:600;line-height:1.3;}
+    .day-sum{font-size:.7rem;color:var(--muted);margin-top:.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .day-chev{font-size:.85rem;color:var(--muted);transition:transform .35s;flex-shrink:0;}
+    .day-block.open .day-chev{transform:rotate(180deg);}
+    .day-content{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1);background:var(--card);border:1px solid var(--gold);border-top:none;border-radius:0 0 .875rem .875rem;}
+    .day-inner{padding:1.1rem;}
+
+    /* INFO CHIPS */
+    .info-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;}
+    .chip{display:flex;align-items:center;gap:.3rem;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:999px;padding:.28rem .7rem;font-size:.7rem;color:var(--muted);}
+
+    /* HIGHLIGHT BOXES */
+    .got-box{background:linear-gradient(135deg,#1a0a0a,#2a0d0d);border:1px solid #5a1f1f;border-radius:.875rem;padding:1rem 1.2rem;margin-bottom:1rem;position:relative;overflow:hidden;}
+    .got-box::before{content:'⚔️';position:absolute;right:1rem;top:50%;transform:translateY(-50%);font-size:3.5rem;opacity:.06;pointer-events:none;}
+    .got-box .hbey{color:#f85149;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.35rem;}
+    .got-box p{color:var(--muted);font-size:.79rem;line-height:1.6;max-width:560px;}
+    .dub-box{background:linear-gradient(135deg,#0a1a0a,#0d2a0d);border:1px solid #2a5a2a;border-radius:.875rem;padding:1rem 1.2rem;margin-bottom:1rem;position:relative;overflow:hidden;}
+    .dub-box::before{content:'☘️';position:absolute;right:1rem;top:50%;transform:translateY(-50%);font-size:3.5rem;opacity:.07;pointer-events:none;}
+    .dub-box .hbey{color:var(--green);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.35rem;}
+    .dub-box p{color:var(--muted);font-size:.79rem;line-height:1.6;max-width:560px;}
+    .note-box{background:rgba(88,166,255,.05);border:1px solid rgba(88,166,255,.2);border-radius:.7rem;padding:.85rem 1rem;display:flex;gap:.6rem;align-items:flex-start;margin-bottom:1rem;}
+    .note-box .ni{font-size:1rem;flex-shrink:0;}
+    .note-box p{font-size:.77rem;color:var(--muted);line-height:1.55;}
+    .note-box strong{color:var(--text);}
+
+    /* ROUTE STRIP */
+    .route-strip{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.2);border-radius:.875rem;padding:.85rem 1rem;margin-bottom:1rem;}
+    .route-strip h4{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:.5rem;}
+    .route-steps{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;font-size:.72rem;color:var(--muted);}
+    .route-steps .arrow{color:var(--gold);}
+
+    /* MAP BUTTON */
+    .map-btn{display:inline-flex;align-items:center;gap:.25rem;background:rgba(88,166,255,.1);border:1px solid rgba(88,166,255,.25);border-radius:999px;padding:.28rem .7rem;font-size:.65rem;color:var(--blue);transition:background .2s;white-space:nowrap;min-height:28px;}
+    .map-btn:active{background:rgba(88,166,255,.25);}
+
+    /* UNIFIED DAY SCHEDULE */
+    .day-schedule{display:flex;flex-direction:column;gap:0;}
+
+    .ds-item{display:grid;grid-template-columns:72px 1fr;gap:.6rem;padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.05);align-items:flex-start;}
+    .ds-item:last-child{border-bottom:none;}
+
+    .ds-time{font-size:.7rem;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;line-height:1.3;padding-top:.25rem;}
+    .ds-item.food .ds-time{color:var(--green);}
+    .ds-item.drive .ds-time{color:var(--blue);font-weight:400;font-style:italic;}
+    .ds-item.key-event .ds-time{color:var(--red);}
+
+    .ds-body{display:flex;flex-direction:column;gap:.3rem;}
+    .ds-top{display:flex;align-items:center;gap:.5rem;}
+    .ds-ico{font-size:1.1rem;flex-shrink:0;line-height:1;}
+    .ds-name{font-size:.86rem;font-weight:600;flex:1;min-width:0;}
+    .ds-item.drive .ds-name{font-size:.79rem;font-weight:400;color:var(--muted);}
+    .ds-desc{font-size:.75rem;color:var(--muted);line-height:1.5;}
+    .ds-foot{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;margin-top:.2rem;}
+
+    /* tags */
+    .tag{display:inline-block;font-size:.61rem;padding:.13rem .5rem;border-radius:999px;border:1px solid var(--border);color:var(--muted);white-space:nowrap;}
+    .tag-got{border-color:#5a1f1f;color:#f85149;}
+    .tag-food{border-color:#1f3a1f;color:var(--green);}
+    .tag-culture{border-color:#1f2a4a;color:var(--blue);}
+    .tag-nature{border-color:#2a3a1f;color:#7ee787;}
+    .tag-drive{border-color:#2a2a40;color:var(--blue);}
+    .tag-warn{border-color:#3a2a00;color:#e3b341;}
+    .tag-free{border-color:#1f3a1f;color:#7ee787;}
+    .price-tag{display:inline-block;font-size:.62rem;font-weight:700;color:var(--gold);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:999px;padding:.12rem .45rem;}
+
+    /* TIPS */
+    .tips-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.75rem;padding-bottom:1rem;}
+    .tip{background:var(--card);border:1px solid var(--border);border-radius:.875rem;padding:1rem;}
+    .tip .ti{font-size:1.3rem;margin-bottom:.55rem;}
+    .tip h4{font-size:.85rem;font-weight:600;margin-bottom:.25rem;}
+    .tip p{font-size:.75rem;color:var(--muted);line-height:1.5;}
+
+    /* BOTTOM BAR */
+    .bottom-bar{position:fixed;bottom:0;left:0;right:0;z-index:300;background:rgba(13,17,23,.97);backdrop-filter:blur(16px);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom);}
+    .bottom-bar a{flex:1;display:flex;flex-direction:column;align-items:center;gap:.15rem;padding:.55rem .3rem;font-size:.57rem;color:var(--muted);transition:color .2s;}
+    .bottom-bar a .bbi{font-size:1.2rem;line-height:1;}
+    .bottom-bar a:active{color:var(--gold);}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:2rem 0 1rem;text-align:center;color:var(--muted);font-size:.75rem;}
+    footer span{color:var(--gold);}
+
+    @media(max-width:600px){
+      .flight-strip{grid-template-columns:1fr;text-align:center;gap:.5rem;}
+      .fi.r{text-align:center;}
+      .fl{width:80px;margin:0 auto;}
+      .border-grid{grid-template-columns:1fr;}
+      .docs-grid{grid-template-columns:1fr;}
+      .eu-details{grid-template-columns:1fr 1fr;}
+      .night-grid{grid-template-columns:1fr;}
+      .tips-grid{grid-template-columns:1fr 1fr;}
+      .day-sum{display:none;}
+      .roadmap::before{left:12px;}
+      .day-block{margin-left:36px;}
+      .day-dot{left:-28px;width:14px;height:14px;}
+      .day-dot::after{width:6px;height:6px;}
+      .ds-item{grid-template-columns:62px 1fr;}
+      .ins-opts{grid-template-columns:1fr 1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-badge">Viaje organizado · Junio 2026</div>
+  <h1>Belfast<br/><span>&</span> Dublín</h1>
+  <p class="hero-sub">4 días explorando Irlanda del Norte, los escenarios de Juego de Tronos y la capital irlandesa.</p>
+  <div class="hero-pills">
+    <span class="pill">✈️ 5–9 junio</span>
+    <span class="pill">🚗 Europcar BFS</span>
+    <span class="pill">⚔️ Game of Thrones</span>
+    <span class="pill">☘️ Dublín</span>
+    <span class="pill">🌊 Costa Antrim</span>
+  </div>
+  <div class="scroll-cue">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Scroll
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<nav class="day-nav" id="daynav">
+  <a href="#vuelos"><span class="nd">✈</span>Vuelos</a>
+  <a href="#docs"><span class="nd">📄</span>Docs</a>
+  <a href="#seguro"><span class="nd">🚨</span>Seguro</a>
+  <a href="#europcar"><span class="nd">🚗</span>Coche</a>
+  <a href="#alojamiento"><span class="nd">🏨</span>Hotel</a>
+  <a href="#day1"><span class="nd">D1</span>Vie 5/6</a>
+  <a href="#day2"><span class="nd">D2</span>Sáb 6/6</a>
+  <a href="#day3"><span class="nd">D3</span>Dom 7/6</a>
+  <a href="#day4"><span class="nd">D4</span>Lun 8/6</a>
+  <a href="#day5"><span class="nd">D5</span>Mar 9/6</a>
+  <a href="#tips"><span class="nd">💡</span>Tips</a>
+</nav>
+
+<div class="container">
+
+<!-- VUELOS -->
+<div class="sh" id="vuelos">
+  <div class="ey">Información de vuelo</div>
+  <h2>Tus vuelos</h2>
+</div>
+<div class="flight-strip">
+  <div class="fi"><div class="t">05:30</div><div class="c">✈ Ida · España → BFS</div><div class="d">Viernes, 5 junio 2026</div></div>
+  <div class="fc"><div class="fl"><hr/><span style="font-size:1.1rem">✈️</span><hr/></div><div style="font-size:.67rem;color:var(--muted)">Belfast Intl.</div></div>
+  <div class="fi r"><div class="t">18:00</div><div class="c">Vuelta · BFS → España ✈</div><div class="d">Martes, 9 junio 2026</div></div>
+</div>
+
+<!-- DOCUMENTOS -->
+<div class="sh" id="docs">
+  <div class="ey">Documentación necesaria</div>
+  <h2>Lo que lleváis desde España</h2>
+  <p>Entráis en UK (Irlanda del Norte) y también en la República de Irlanda (UE). Los requisitos difieren.</p>
+</div>
+<div class="abox"><div class="bxi">🚨</div><p><strong>Atención post-Brexit:</strong> El DNI español <strong>NO es válido para entrar en el Reino Unido</strong> desde octubre 2021. Es obligatorio el <strong>pasaporte en vigor</strong> para Belfast. El DNI sí funciona en Dublín (Rep. Irlanda, UE).</p></div>
+<div class="docs-grid">
+  <div class="doc-card"><div class="di">📘</div><h4>Pasaporte español</h4><p>Imprescindible para UK.</p><ul><li>Válido durante toda la estancia</li><li>Recomendable: 6 meses extra de validez</li><li class="warn">Guarda copia digital (email o nube)</li><li class="no">DNI solo → NO entra en UK</li></ul></div>
+  <div class="doc-card"><div class="di">🪪</div><h4>DNI español</h4><p>Válido en la República de Irlanda como respaldo.</p><ul><li>Sirve en Dublín</li><li>Identificación de apoyo</li><li class="no">NO válido en Belfast (UK)</li></ul></div>
+  <div class="doc-card"><div class="di">🚗</div><h4>Carnet de conducir</h4><p>Permiso español válido en UK y Rep. Irlanda. Sin permiso internacional.</p><ul><li>Tipo B válido en ambos países</li><li>Mínimo 1 año de antigüedad (Europcar)</li><li class="warn">Edad mínima: 21 años (25 para SUV)</li><li>Llevar el carnet físico</li></ul></div>
+  <div class="doc-card"><div class="di">💳</div><h4>Tarjeta de crédito</h4><p>Para el depósito Europcar. No aceptan débito.</p><ul><li>Visa o Mastercard crédito</li><li>A nombre del conductor principal</li><li class="warn">Bloqueo depósito ~500–1.000 £</li><li class="no">No aceptan débito para fianza</li></ul></div>
+  <div class="doc-card"><div class="di">📄</div><h4>Confirmaciones</h4><p>Descarga offline antes de salir.</p><ul><li>Confirmación vuelo</li><li>Reserva hotel (todas las noches)</li><li>Confirmación Europcar</li><li>Entradas: Titanic, Guinness Storehouse, Castle Ward, Carrick-a-Rede</li><li class="warn">Capturas sin internet</li></ul></div>
+</div>
+
+<!-- SEGURO URGENTE -->
+<div class="sh" id="seguro">
+  <div class="ey">Acción urgente requerida</div>
+  <h2>Seguro de viaje — No tenéis</h2>
+</div>
+<div class="ins-urgent">
+  <div class="ins-top">
+    <div class="ins-ico">🚨</div>
+    <div>
+      <h3>Sin seguro de viaje estáis desprotegidos en UK</h3>
+      <div class="ins-sub">La Tarjeta Sanitaria Europea (TSE) <strong style="color:var(--red)">NO cubre en Irlanda del Norte (Reino Unido)</strong> desde el Brexit. Cualquier urgencia médica en Belfast podría costaros cientos o miles de libras. Contratad un seguro antes de salir de España.</div>
+    </div>
+  </div>
+  <div class="ins-opts">
+    <div class="ins-opt"><h4>IATI Mochilero</h4><p>Cobertura médica ilimitada UK + Rep. Irlanda. Sin franquicia. App móvil muy buena.</p><div class="ins-price">~€18–25 · 5 días</div></div>
+    <div class="ins-opt"><h4>Chapka Cap Trip</h4><p>Muy popular entre viajeros. Cubre cancelaciones, equipaje y médico. Buena relación calidad/precio.</p><div class="ins-price">~€20–28 · 5 días</div></div>
+    <div class="ins-opt"><h4>AXA Viajes</h4><p>Gran asistencia en carretera — útil con coche de alquiler. Cobertura médica hasta 300.000€.</p><div class="ins-price">~€22–30 · 5 días</div></div>
+    <div class="ins-opt"><h4>Intermundial Go</h4><p>Opción económica con cobertura básica sólida. Disponible online en minutos. Contrato inmediato.</p><div class="ins-price">~€15–22 · 5 días</div></div>
+  </div>
+  <div class="ins-cover"><strong>El seguro debe cubrir:</strong> Asistencia médica en UK sin franquicia · Repatriación sanitaria · Cancelación del vuelo · Pérdida o robo de equipaje · Responsabilidad civil. <strong>En destino:</strong> 999 (emergencias) — guardad el teléfono de vuestra aseguradora en el móvil antes de salir.</div>
+</div>
+
+<!-- FRONTERA -->
+<div class="sh">
+  <div class="ey">Cruce de frontera</div>
+  <h2>Belfast ↔ Dublín en coche</h2>
+  <p>La frontera es invisible, pero cambia la moneda, los límites de velocidad y el roaming.</p>
+</div>
+<div class="sbox"><div class="bxi">✅</div><p><strong>Sin controles:</strong> No hay barreras ni pasaporte en la frontera. El Acuerdo de Viernes Santo garantiza libre circulación. Simplemente seguís conduciendo por la A1/M1. El GPS avisa del cambio de país.</p></div>
+<div class="border-grid">
+  <div class="border-card"><h4>🇬🇧 → 🇮🇪 Belfast a Dublín</h4><ul>
+    <li><span class="lb">Ruta:</span>A1 → Newry → M1 → Dublín</li>
+    <li><span class="lb">ETA:</span>~2h desde Belfast (sin tráfico)</li>
+    <li><span class="lb">Moneda:</span>£ GBP → € EUR</li>
+    <li><span class="lb">Velocidad:</span>mph → km/h al cruzar</li>
+    <li><span class="lb">Roaming:</span>Pasas a tarifa UE</li>
+    <li><span class="lb">Coche:</span>✅ Europcar lo autoriza — verifica contrato</li>
+  </ul></div>
+  <div class="border-card"><h4>🇮🇪 → 🇬🇧 Dublín a Belfast</h4><ul>
+    <li><span class="lb">Ruta:</span>M1 → Dundalk → A1 → Belfast</li>
+    <li><span class="lb">ETA:</span>~2h desde Dublín</li>
+    <li><span class="lb">Moneda:</span>€ EUR → £ GBP</li>
+    <li><span class="lb">Velocidad:</span>km/h → mph al volver</li>
+    <li><span class="lb">Roaming:</span>Vuelves a tarifa UK</li>
+    <li><span class="lb">Urgencias:</span>999 en todo el trayecto</li>
+  </ul></div>
+</div>
+<div class="abox"><div class="bxi">⚠️</div><p><strong>Seguro del coche:</strong> Confirmad con Europcar al recoger el vehículo que el seguro cubre el cruce a la República de Irlanda. Pedid confirmación escrita o que aparezca en el contrato.</p></div>
+
+<!-- EUROPCAR -->
+<div class="sh" id="europcar">
+  <div class="ey">Coche de alquiler</div>
+  <h2>Europcar — Belfast International Airport</h2>
+</div>
+<div class="eu-card">
+  <div class="eu-header"><div class="euico">🚗</div><div><h3>Europcar Belfast International Airport (BFS)</h3><p>Mostrador en zona de llegadas del terminal. Recogéis el coche justo al aterrizar.</p></div></div>
+  <div class="eu-details">
+    <div class="eu-det"><div class="el">Dirección</div><div class="ev">Terminal Building, Belfast International Airport, Crumlin, BT29 4AB<br/><a href="https://www.google.com/maps/search/?api=1&query=Europcar+Belfast+International+Airport+Crumlin+BT29+4AB" target="_blank">📍 Ver en Google Maps</a></div></div>
+    <div class="eu-det"><div class="el">Recogida</div><div class="ev">Vie 5 junio · tras aterrizar (~06:30)<br/>Mostrador zona llegadas BFS<br/><strong>ETA desde aeropuerto al centro: 20 min</strong></div></div>
+    <div class="eu-det"><div class="el">Devolución</div><div class="ev">Mar 9 junio · antes de las 15:30<br/>Zona "Car Rental Returns" BFS<br/><a href="https://www.google.com/maps/search/?api=1&query=Belfast+International+Airport+Car+Rental+Return" target="_blank">📍 Maps devolución</a></div></div>
+    <div class="eu-det"><div class="el">Documentos</div><div class="ev">Pasaporte · Carnet conducir (mín. 1 año) · Tarjeta crédito · Nº reserva</div></div>
+    <div class="eu-det"><div class="el">Depósito</div><div class="ev">Bloqueo en tarjeta ~500–1.000 £. Se libera al devolver en buen estado.</div></div>
+    <div class="eu-det"><div class="el">Conducción</div><div class="ev">🚗 Por la <strong>izquierda</strong> en todo el viaje<br/>⚠ Cuidado especial en rotondas</div></div>
+  </div>
+  <div class="eu-warn"><strong>⚠ Antes de devolver:</strong> Llena el depósito en la gasolinera de acceso al aeropuerto. Devolución con nivel distinto al pactado → recargo elevado.</div>
+</div>
+
+<!-- ALOJAMIENTO -->
+<div class="sh" id="alojamiento">
+  <div class="ey">Reservas de alojamiento</div>
+  <h2>4 noches — Listado completo a reservar</h2>
+  <p>3 noches en Belfast + 1 noche en la Costa de Antrim. Opciones ordenadas de más barato a más caro.</p>
+</div>
+<div class="abox"><div class="bxi">⚠️</div><p><strong>Reservad ya:</strong> Junio es temporada alta en Belfast y la Costa de Antrim. Los alojamientos baratos se agotan con meses de antelación. La noche del sábado en Bushmills es la más difícil de conseguir.</p></div>
+<div class="night-grid">
+  <div class="night-card">
+    <div class="night-hd"><div class="nt"><span class="nb">Noche 1</span><span class="ns">↗ Reservar</span></div><h4>🏙️ Belfast Centro</h4><div class="nsub">Viernes 5 junio · Check-in ~09:00 (equipaje)</div></div>
+    <div class="night-bd">
+      <div class="nbl">Opciones budget (habitación doble)</div>
+      <div class="ho"><span class="hn">Ibis Belfast City Centre</span><span class="hp">~£55/noche</span></div>
+      <div class="ho"><span class="hn">Premier Inn City Centre</span><span class="hp">~£60/noche</span></div>
+      <div class="ho"><span class="hn">Holiday Inn Express</span><span class="hp">~£65/noche</span></div>
+      <div class="ho"><span class="hn">Vagabonds Hostel (dorm)</span><span class="ht">por persona</span><span class="hp">~£22/noche</span></div>
+      <div class="bnote">Reservad en <a href="https://www.booking.com" target="_blank">Booking.com</a> · Pedid guardar equipaje si check-in no disponible a las 07:00</div>
+    </div>
+  </div>
+  <div class="night-card">
+    <div class="night-hd"><div class="nt"><span class="nb">Noche 2</span><span class="ns">↗ Prioritario</span></div><h4>🌊 Bushmills / Costa Antrim</h4><div class="nsub">Sábado 6 junio · La más difícil de conseguir</div></div>
+    <div class="night-bd">
+      <div class="nbl">Opciones budget (por persona)</div>
+      <div class="ho"><span class="hn">Whitepark Bay Hostel (YHANI)</span><span class="ht">junto a Causeway</span><span class="hp">~£22/pers</span></div>
+      <div class="ho"><span class="hn">Sheep Island View Hostel</span><span class="ht">Ballycastle</span><span class="hp">~£20/pers</span></div>
+      <div class="ho"><span class="hn">B&B locales Bushmills</span><span class="ht">habitación doble</span><span class="hp">~£65–80</span></div>
+      <div class="ho"><span class="hn">Bushmills Inn</span><span class="ht">si queda presupuesto</span><span class="hp">~£130</span></div>
+      <div class="bnote">Buscad en <a href="https://www.booking.com" target="_blank">Booking.com</a> o <a href="https://www.hostelworld.com" target="_blank">Hostelworld</a> · Zona: "Bushmills" o "Ballycastle"</div>
+    </div>
+  </div>
+  <div class="night-card">
+    <div class="night-hd"><div class="nt"><span class="nb">Noche 3</span><span class="ns">↗ Reservar</span></div><h4>🏙️ Belfast Centro</h4><div class="nsub">Domingo 7 junio · Vuelta de Dublín ~19:00</div></div>
+    <div class="night-bd">
+      <div class="nbl">Opciones budget (habitación doble)</div>
+      <div class="ho"><span class="hn">Ibis Belfast City Centre</span><span class="hp">~£55/noche</span></div>
+      <div class="ho"><span class="hn">Premier Inn City Centre</span><span class="hp">~£60/noche</span></div>
+      <div class="ho"><span class="hn">Holiday Inn Express</span><span class="hp">~£65/noche</span></div>
+      <div class="ho"><span class="hn">Vagabonds Hostel (dorm)</span><span class="ht">por persona</span><span class="hp">~£22/noche</span></div>
+      <div class="bnote">Podéis reservar noches 1, 3 y 4 en el mismo hotel para mayor comodidad</div>
+    </div>
+  </div>
+  <div class="night-card">
+    <div class="night-hd"><div class="nt"><span class="nb">Noche 4</span><span class="ns">↗ Reservar</span></div><h4>🏙️ Belfast Centro</h4><div class="nsub">Lunes 8 junio · Última noche antes del vuelo</div></div>
+    <div class="night-bd">
+      <div class="nbl">Opciones budget (habitación doble)</div>
+      <div class="ho"><span class="hn">Ibis Belfast City Centre</span><span class="hp">~£55/noche</span></div>
+      <div class="ho"><span class="hn">Premier Inn City Centre</span><span class="hp">~£60/noche</span></div>
+      <div class="ho"><span class="hn">Holiday Inn Express</span><span class="hp">~£65/noche</span></div>
+      <div class="ho"><span class="hn">Vagabonds Hostel (dorm)</span><span class="ht">por persona</span><span class="hp">~£22/noche</span></div>
+      <div class="bnote">Pedid late check-out o guardar maletas hasta las 15:00 — vuelo no hasta las 18:00</div>
+    </div>
+  </div>
+</div>
+<div class="ibox"><div class="bxi">💡</div><p><strong>Truco presupuesto:</strong> Si reserváis el mismo hotel para noches 1, 3 y 4 (Premier Inn o Ibis) conseguiréis mejor precio por estancias múltiples y no tendréis que llevar maletas de un lado a otro. Solo cambiaréis la noche del sábado al Bushmills.</p></div>
+
+<!-- ITINERARIO -->
+<div class="sh">
+  <div class="ey">Itinerario completo</div>
+  <h2>Día a día — Toca para desplegar</h2>
+  <p>Actividades y comidas en orden cronológico con ETAs de conducción y enlaces directos a Maps.</p>
+</div>
+
+<div class="roadmap">
+
+<!-- DÍA 1 -->
+<div class="day-block open" id="day1">
+  <div class="day-dot"></div>
+  <div class="day-header" onclick="toggleDay('day1')">
+    <div class="day-meta">
+      <div class="day-label">Día 1 · Viernes 5 junio</div>
+      <div class="day-title">Llegada a Belfast — Descubriendo la ciudad</div>
+      <div class="day-sum">Market · Titanic · Murales · City Hall · Cathedral Quarter · Kelly's Cellars</div>
+    </div>
+    <div class="day-chev">▾</div>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="info-row">
+      <span class="chip">✈️ Aterrizáis ~06:15</span>
+      <span class="chip">🚗 ETA centro: 06:35</span>
+      <span class="chip">🏨 Dejar equipaje en hotel</span>
+    </div>
+    <div class="day-schedule">
+      <div class="ds-item drive"><div class="ds-time">05:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">✈️</span><span class="ds-name">Vuelo sale de España → BFS</span></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">06:15–06:35</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Europcar BFS + conducción al centro · <strong style="color:var(--blue)">ETA: 06:35</strong></span></div><div class="ds-desc">Mostrador de llegadas BFS. 20 min de conducción al centro. Dejar equipaje en el hotel.</div><div class="ds-foot"><span class="tag tag-drive">20 min · M2</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Europcar+Belfast+International+Airport+Crumlin+BT29+4AB" target="_blank">📍 Europcar</a></div></div></div>
+      <div class="ds-item food"><div class="ds-time">07:00–08:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🎭</span><span class="ds-name">St. George's Market — Desayuno</span></div><div class="ds-desc">El mercado cubierto más antiguo de Irlanda. Ulster Fry auténtico (bacon, soda bread, black pudding, huevo), bollería y café. Abre a las 06:00 los viernes.</div><div class="ds-foot"><span class="tag tag-food">Desayuno tradicional</span><span class="price-tag">£5–7 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=St+Georges+Market+May+Street+Belfast" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">08:30–09:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏨</span><span class="ds-name">Hotel: freshen up + dejar equipaje</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">09:30–12:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚢</span><span class="ds-name">Titanic Belfast</span></div><div class="ds-desc">El museo más premiado de Europa. 9 galerías inmersivas en los propios astilleros donde se construyó el Titanic. Mínimo 2.5h. Abre a las 09:00.</div><div class="ds-foot"><span class="tag tag-culture">Cultura</span><span class="tag tag-warn">⚠ Reserva previa</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Titanic+Belfast+Queens+Island" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item food"><div class="ds-time">12:30–13:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🥘</span><span class="ds-name">Maggie May's Café — Almuerzo</span></div><div class="ds-desc">Institución de Belfast desde hace décadas. Platos enormes de comida irlandesa tradicional: champ (puré con cebolleta), Irish stew de cordero, soda bread casero. El sitio más auténtico y barato del centro.</div><div class="ds-foot"><span class="tag tag-food">Cocina irlandesa tradicional</span><span class="price-tag">£7–10 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Maggie+Mays+Cafe+Belfast+Botanic+Avenue" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">13:30–15:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🎨</span><span class="ds-name">Murales políticos — Black Taxi Tour</span></div><div class="ds-desc">Falls Road y Shankill Road: los murales más impresionantes de Europa. El Black Taxi Tour os lleva con contexto histórico real por ambos lados del conflicto. Reservad el día anterior.</div><div class="ds-foot"><span class="tag tag-culture">Historia · ~90 min</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Falls+Road+Murals+Belfast+West" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">15:00–16:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏛️</span><span class="ds-name">Belfast City Hall</span></div><div class="ds-desc">Imponente ayuntamiento neoclásico en Donegall Square. Tour guiado gratuito cada 30 min. La fachada iluminada al anochecer es espectacular.</div><div class="ds-foot"><span class="tag tag-culture">Historia</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Belfast+City+Hall+Donegall+Square" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">16:00–18:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏙️</span><span class="ds-name">Cathedral Quarter + Victoria Square (mirador)</span></div><div class="ds-desc">Barrio bohemio con arte callejero y cafeterías. La terraza panorámica de Victoria Square es gratuita — las mejores vistas del skyline de Belfast.</div><div class="ds-foot"><span class="tag tag-culture">Arte urbano</span><span class="tag tag-free">Mirador gratis</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Cathedral+Quarter+Belfast" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">18:00–20:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏨</span><span class="ds-name">Descanso en el hotel — primer día tras madrugar</span></div></div></div>
+      <div class="ds-item food key-event"><div class="ds-time">20:00–22:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🍺</span><span class="ds-name">Kelly's Cellars — Cena</span></div><div class="ds-desc">El pub más antiguo de Belfast (desde 1720). Comida irlandesa tradicional: Irish stew, boxty, soda bread. Ambiente local auténtico con música en directo algunos viernes. Nada de turistas.</div><div class="ds-foot"><span class="tag tag-food">Cena tradicional</span><span class="price-tag">£9–13 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Kellys+Cellars+Bank+Street+Belfast" target="_blank">📍 Maps</a></div></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- DÍA 2 -->
+<div class="day-block" id="day2">
+  <div class="day-dot"></div>
+  <div class="day-header" onclick="toggleDay('day2')">
+    <div class="day-meta">
+      <div class="day-label">Día 2 · Sábado 6 junio</div>
+      <div class="day-title">⚔️ Ruta Game of Thrones — Costa de Antrim</div>
+      <div class="day-sum">Dark Hedges · Carrick-a-Rede · Ballintoy · Giant's Causeway · Cushendun · Bushmills Distillery</div>
+    </div>
+    <div class="day-chev">▾</div>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="got-box"><div class="hbey">Los escenarios reales de Poniente</div><p>Más de 25 localizaciones de GoT en Irlanda del Norte. Hoy la ruta costera de Antrim. <strong>Dormid en Bushmills</strong> para no volver de noche a Belfast y poder madrugar mañana si queréis ver Giant's Causeway al amanecer.</p></div>
+    <div class="info-row">
+      <span class="chip">🕖 Salida: 07:00</span>
+      <span class="chip">🗺️ ~200 km circulares</span>
+      <span class="chip">🏨 Noche en Bushmills</span>
+    </div>
+    <div class="route-strip"><h4>🗺️ Orden de la ruta</h4><div class="route-steps"><span>Belfast</span><span class="arrow">→</span><span>Dark Hedges</span><span class="arrow">→</span><span>Carrick-a-Rede</span><span class="arrow">→</span><span>Ballintoy</span><span class="arrow">→</span><span>Giant's Causeway</span><span class="arrow">→</span><span>Cushendun Caves</span><span class="arrow">→</span><span>Bushmills 🏨</span></div></div>
+    <div class="day-schedule">
+      <div class="ds-item drive"><div class="ds-time">07:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Salida Belfast → Dark Hedges · <strong style="color:var(--blue)">ETA: 07:55</strong></span></div><div class="ds-desc">M2 norte → A26 dirección Armoy/Ballymoney. 55 min de conducción.</div><div class="ds-foot"><span class="tag tag-drive">55 min · M2 → A26</span></div></div></div>
+      <div class="ds-item food"><div class="ds-time">07:00 antes</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🛒</span><span class="ds-name">Desayuno de carretera — Spar/Tesco</span></div><div class="ds-desc">Comprad la noche anterior o parad en un Spar al salir: soda bread, mantequilla, queso irlandés, zumo y fruta. Desayunad en el coche. Rápido y muy barato.</div><div class="ds-foot"><span class="tag tag-food">Desayuno rápido</span><span class="price-tag">£3–5 p/p</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">07:55–08:25</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🌳</span><span class="ds-name">Dark Hedges — Camino del Rey</span></div><div class="ds-desc">El túnel de hayas centenarias del Camino del Rey en GoT. A las 08:00 no hay nadie — la luz matinal entre las ramas es perfecta. Parking gratuito en Bregagh Road.</div><div class="ds-foot"><span class="tag tag-got">GoT · Camino del Rey</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Dark+Hedges+Bregagh+Road+Armoy+Ballymoney" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">08:25–08:55</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Dark Hedges → Carrick-a-Rede · <strong style="color:var(--blue)">ETA: 08:55</strong></span></div><div class="ds-desc">30 min por carreteras costeras A2. Paisaje espectacular.</div><div class="ds-foot"><span class="tag tag-drive">30 min · A2 costera</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">09:00–10:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🌉</span><span class="ds-name">Carrick-a-Rede Rope Bridge</span></div><div class="ds-desc">Puente colgante a 30m sobre el mar. Solo 8 personas a la vez. Walk de 1 km ida y vuelta. Las vistas desde el otro lado son alucinantes.</div><div class="ds-foot"><span class="tag tag-nature">Aventura</span><span class="tag tag-warn">⚠ Reserva previa obligatoria</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Carrick-a-Rede+Rope+Bridge+Ballintoy+County+Antrim" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">10:30–10:35</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Carrick-a-Rede → Ballintoy · <strong style="color:var(--blue)">ETA: 10:35</strong></span></div><div class="ds-foot"><span class="tag tag-drive">5 min</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">10:35–11:10</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">⛵</span><span class="ds-name">Ballintoy Harbour — Islas del Hierro</span></div><div class="ds-desc">El puerto de Pyke en GoT. Acantilados negros y mar esmeralda en un paisaje de otro mundo. Muy cerca de Carrick-a-Rede. Parada, fotos y el pequeño café si necesitáis algo.</div><div class="ds-foot"><span class="tag tag-got">GoT · Pyke</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Ballintoy+Harbour+County+Antrim" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">11:10–11:25</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Ballintoy → Giant's Causeway · <strong style="color:var(--blue)">ETA: 11:25</strong></span></div><div class="ds-foot"><span class="tag tag-drive">15 min · A2</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">11:25–12:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🌊</span><span class="ds-name">Giant's Causeway</span></div><div class="ds-desc">Las 40.000 columnas de basalto hexagonal — Patrimonio UNESCO. Las columnas se acceden andando desde el parking, es gratuito. El Visitor Centre (de pago) es opcional.</div><div class="ds-foot"><span class="tag tag-nature">UNESCO</span><span class="tag tag-free">Acceso gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Giants+Causeway+Bushmills+County+Antrim" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item food"><div class="ds-time">12:30–13:15</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🥗</span><span class="ds-name">Nook Café — Almuerzo</span></div><div class="ds-desc">Pequeña cafetería junto a Giant's Causeway. Sopas caseras, scones con mantequilla y café. Típico y sencillo. La sopa de la costa de Antrim con soda bread es el almuerzo más irlandés que encontraréis.</div><div class="ds-foot"><span class="tag tag-food">Comida tradicional</span><span class="price-tag">£6–9 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Nook+Cafe+Giants+Causeway+Bushmills" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">13:15–13:50</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Giant's Causeway → Cushendun · <strong style="color:var(--blue)">ETA: 13:50</strong></span></div><div class="ds-desc">35 min por la espectacular carretera costera A2 hacia el este. No tengáis prisa — el paisaje vale la pena.</div><div class="ds-foot"><span class="tag tag-drive">35 min · A2 costera</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">13:50–14:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🗿</span><span class="ds-name">Cushendun Caves</span></div><div class="ds-desc">Cuevas de arenisca rojiza sobre el mar donde Melisandre dio a luz a la sombra asesina (T2 GoT). Acceso por la playa. El pueblo de Cushendun también es precioso.</div><div class="ds-foot"><span class="tag tag-got">GoT · Melisandre</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Cushendun+Caves+County+Antrim" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">14:30–15:05</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Cushendun → Bushmills Distillery · <strong style="color:var(--blue)">ETA: 15:05</strong></span></div><div class="ds-foot"><span class="tag tag-drive">35 min · volvéis hacia el oeste</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">15:05–16:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🥃</span><span class="ds-name">Old Bushmills Distillery — Tour + Cata</span></div><div class="ds-desc">La destilería con licencia más antigua del mundo (1608). Tour guiado con cata de whisky al final. El Single Malt de la destilería es excepcional. Reservad el tour online.</div><div class="ds-foot"><span class="tag tag-culture">Destilería · 1608</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Old+Bushmills+Distillery+Bushmills+County+Antrim" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">16:30–19:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏨</span><span class="ds-name">Check-in alojamiento Bushmills — descanso</span></div></div></div>
+      <div class="ds-item food key-event"><div class="ds-time">19:30–21:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🍺</span><span class="ds-name">The Bush Bar — Cena</span></div><div class="ds-desc">Pub local del pueblo de Bushmills. Nada de turistas. Irish stew, pie de carne, fish & chips frescos del día. Una pinta de Guinness tirada perfecta. El pub de la gente del pueblo.</div><div class="ds-foot"><span class="tag tag-food">Pub local tradicional</span><span class="price-tag">£9–13 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=The+Bush+Bar+Bushmills+Main+Street" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">OPCIONAL</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏰</span><span class="ds-name">Castle Ward (Invernalia) — añade 3h al inicio del día</span></div><div class="ds-desc">Salid a las 07:00 → Castle Ward 07:45 (45 min desde Belfast, sureste). Visita 2h. → Dark Hedges 10:30 → resto de la ruta con retraso acumulado. Solo recomendable para fans de GoT con mucha energía.</div><div class="ds-foot"><span class="tag tag-got">GoT opcional</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Castle+Ward+Strangford+County+Down" target="_blank">📍 Maps</a></div></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- DÍA 3 -->
+<div class="day-block" id="day3">
+  <div class="day-dot"></div>
+  <div class="day-header" onclick="toggleDay('day3')">
+    <div class="day-meta">
+      <div class="day-label">Día 3 · Domingo 7 junio</div>
+      <div class="day-title">☘️ Excursión a Dublín — Capital irlandesa</div>
+      <div class="day-sum">Guinness Storehouse · Trinity College · Dublin Castle · Temple Bar · Vuelta Belfast</div>
+    </div>
+    <div class="day-chev">▾</div>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="dub-box"><div class="hbey">Dublín en un día — 2h en coche desde Belfast</div><p>Salid de Bushmills a las 07:00. Parad en Belfast a dejar equipaje en el hotel (~07:55) y arrancad hacia Dublín por la A1/M1. Al cruzar en Newry entráis en la República: cambio a euros y km/h. Regreso ~18:30.</p></div>
+    <div class="info-row">
+      <span class="chip">🕖 Salida Bushmills: 07:00</span>
+      <span class="chip">🚗 ETA Dublín: ~10:00</span>
+      <span class="chip">💶 Euro en Dublín</span>
+      <span class="chip">🕖 ETA Belfast vuelta: ~18:30</span>
+    </div>
+    <div class="route-strip"><h4>🗺️ Ruta del día</h4><div class="route-steps"><span>Bushmills</span><span class="arrow">→</span><span>Belfast (hotel)</span><span class="arrow">→</span><span>A1 → Newry (frontera)</span><span class="arrow">→</span><span>M1 → Dublín</span><span class="arrow">→</span><span>Vuelta A1 → Belfast</span></div></div>
+    <div class="day-schedule">
+      <div class="ds-item drive"><div class="ds-time">07:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Salida Bushmills → Belfast · <strong style="color:var(--blue)">ETA: 07:55</strong></span></div><div class="ds-foot"><span class="tag tag-drive">55 min</span></div></div></div>
+      <div class="ds-item food"><div class="ds-time">07:00 antes</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🛒</span><span class="ds-name">Desayuno de carretera — Centra / Spar A1</span></div><div class="ds-desc">Parad en el primer Centra o Spar en la A1. Café, sándwich caliente o soda bread. Muy barato y rápido para el inicio del día más largo.</div><div class="ds-foot"><span class="tag tag-food">Desayuno rápido</span><span class="price-tag">£2–4 p/p</span></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">07:55–08:10</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏨</span><span class="ds-name">Belfast: dejar equipaje en hotel</span></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">08:15–10:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Belfast → Dublín · <strong style="color:var(--blue)">ETA: 10:00</strong></span></div><div class="ds-desc">A1 sur → cruce frontera Newry/Dundalk (sin parar) → M1 → Dublín. Al pasar la frontera: señales en km/h y Euro.</div><div class="ds-foot"><span class="tag tag-drive">~2h · A1/M1</span><span class="tag tag-warn">⚠ frontera invisible en Newry</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">10:00–11:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🍺</span><span class="ds-name">Guinness Storehouse</span></div><div class="ds-desc">7 plantas sobre la historia de la cerveza más famosa del mundo. El tour termina en el Gravity Bar en la azotea con una Guinness gratis y vistas 360° de Dublín. Reserva online.</div><div class="ds-foot"><span class="tag tag-culture">Cultura</span><span class="tag tag-warn">⚠ Reserva previa</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Guinness+Storehouse+St+James+Gate+Dublin" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">11:30–11:45</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚶</span><span class="ds-name">Andando al centro · <strong style="color:var(--blue)">ETA: 11:45</strong></span></div><div class="ds-foot"><span class="tag tag-drive">15 min a pie</span></div></div></div>
+      <div class="ds-item food"><div class="ds-time">12:00–13:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🥘</span><span class="ds-name">O'Neill's Pub — Almuerzo</span></div><div class="ds-desc">Pub tradicional irlandés en el corazón de Dublín. Carvery lunch: plato enorme de carne asada, vegetales y patata cocida. La experiencia de comida irlandesa más auténtica y abundante por menos de €12.</div><div class="ds-foot"><span class="tag tag-food">Carvery irlandés</span><span class="price-tag">€9–12 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=ONeills+Pub+Suffolk+Street+Dublin" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">13:00–14:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">📚</span><span class="ds-name">Trinity College — Book of Kells</span></div><div class="ds-desc">El manuscrito iluminado del siglo IX y la Long Room — una de las bibliotecas más bellas del mundo. En pleno centro de Dublín. Reservad la entrada antes.</div><div class="ds-foot"><span class="tag tag-culture">Patrimonio</span><span class="tag tag-warn">⚠ Reserva previa</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Trinity+College+Dublin+College+Green" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">14:00–14:45</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏰</span><span class="ds-name">Dublin Castle + Chester Beatty Library</span></div><div class="ds-desc">En el corazón histórico de la ciudad. El Chester Beatty Library es completamente gratuito y tiene colecciones únicas de manuscritos medievales del mundo. El patio exterior: entrada libre.</div><div class="ds-foot"><span class="tag tag-culture">Historia</span><span class="tag tag-free">Chester Beatty: gratis</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Dublin+Castle+Dame+Street+Dublin+2" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">14:45–16:15</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🎵</span><span class="ds-name">Temple Bar + Grafton Street + St. Stephen's Green</span></div><div class="ds-desc">Temple Bar: pubs con música trad en directo. Grafton Street: músicos callejeros de primer nivel. St. Stephen's Green: parque para sentarse al sol de junio antes de volver.</div><div class="ds-foot"><span class="tag tag-culture">Ambiente</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Temple+Bar+Dublin+2" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">16:30–18:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Dublín → Belfast · <strong style="color:var(--blue)">ETA: 18:30</strong></span></div><div class="ds-desc">M1 norte → Dundalk → cruce frontera → A1 → Belfast. Al pasar Dundalk volvéis a mph y a libras.</div><div class="ds-foot"><span class="tag tag-drive">~2h · M1/A1</span></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">18:30–20:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏨</span><span class="ds-name">Hotel: descanso tras día largo</span></div></div></div>
+      <div class="ds-item food key-event"><div class="ds-time">20:00–22:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🍟</span><span class="ds-name">The Sunflower — Cena</span></div><div class="ds-desc">Pub local muy popular en Belfast. Curry, burguer, fish & chips. Nada de turistas. Ambiente animado, música y la cerveza más barata del centro. Perfecto para reponer tras el día de Dublín.</div><div class="ds-foot"><span class="tag tag-food">Pub local</span><span class="price-tag">£8–12 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Sunflower+Bar+Union+Street+Belfast" target="_blank">📍 Maps</a></div></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- DÍA 4 -->
+<div class="day-block" id="day4">
+  <div class="day-dot"></div>
+  <div class="day-header" onclick="toggleDay('day4')">
+    <div class="day-meta">
+      <div class="day-label">Día 4 · Lunes 8 junio</div>
+      <div class="day-title">Belfast con calma — Cave Hill & Última noche</div>
+      <div class="day-sum">Cave Hill · Belfast Castle · Ulster Museum · Botanic Gardens · Lagan · Duke of York</div>
+    </div>
+    <div class="day-chev">▾</div>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="info-row">
+      <span class="chip">⛰️ Mañana: senderismo Cave Hill</span>
+      <span class="chip">🏛️ Tarde: museos gratuitos</span>
+      <span class="chip">🎶 Noche: pub con música en directo</span>
+    </div>
+    <div class="note-box"><span class="ni">💡</span><p>El St. George's Market está <strong>cerrado los lunes</strong>. Comprad el desayuno la noche anterior en un Tesco Metro. Día tranquilo con mucho verde y cultura gratuita.</p></div>
+    <div class="day-schedule">
+      <div class="ds-item food"><div class="ds-time">08:00–08:45</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">☕</span><span class="ds-name">Clements Coffee — Desayuno</span></div><div class="ds-desc">Cadena local de cafeterías de Belfast, mucho más barata que las de especialidad. Café, tostadas, bollería. Varias sucursales en el centro. O simplemente comprad en el Tesco Metro más cercano.</div><div class="ds-foot"><span class="tag tag-food">Desayuno</span><span class="price-tag">£3–5 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Clements+Coffee+Belfast+city+centre" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">08:45–09:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Centro → Cave Hill Country Park · <strong style="color:var(--blue)">ETA: 09:00</strong></span></div><div class="ds-foot"><span class="tag tag-drive">15 min · Antrim Road norte</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Cave+Hill+Country+Park+Belfast+parking" target="_blank">📍 Maps parking</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">09:00–12:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">⛰️</span><span class="ds-name">Cave Hill — Senderismo hasta McArt's Fort</span></div><div class="ds-desc">La colina que inspiró a Jonathan Swift para Gulliver's Travels. La subida hasta McArt's Fort tarda ~1.5h. Las vistas panorámicas de Belfast, el Lough y las montañas de Down son las mejores del viaje. Nivel moderado.</div><div class="ds-foot"><span class="tag tag-nature">Senderismo 3h</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Cave+Hill+Country+Park+McArt+Fort+Belfast" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item food"><div class="ds-time">12:30–13:15</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🥗</span><span class="ds-name">Picnic en Belfast Castle — Almuerzo</span></div><div class="ds-desc">Bajad andando hasta Belfast Castle y comed en los jardines. Comprad antes en el Lidl del centro: soda bread, queso irlandés Kerrygold, chutney, manzanas y un zumo. Con vistas al Lough Belfast. El almuerzo más económico y más bonito del viaje.</div><div class="ds-foot"><span class="tag tag-food">Picnic</span><span class="price-tag">£4–6 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Belfast+Castle+Antrim+Road+Belfast" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">13:15–13:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Belfast Castle → Ulster Museum · <strong style="color:var(--blue)">ETA: 13:30</strong></span></div><div class="ds-foot"><span class="tag tag-drive">10 min · Stranmillis Rd</span></div></div></div>
+      <div class="ds-item"><div class="ds-time">13:30–15:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏛️</span><span class="ds-name">Ulster Museum</span></div><div class="ds-desc">Museo nacional de Irlanda del Norte. Arte, arqueología, historia natural y la momia egipcia Takabuti del siglo IX a.C. Completamente gratuito. Uno de los mejores museos gratuitos de las islas británicas.</div><div class="ds-foot"><span class="tag tag-culture">Historia y arte</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Ulster+Museum+Botanic+Avenue+Belfast" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">15:30–16:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🌿</span><span class="ds-name">Botanic Gardens</span></div><div class="ds-desc">Jardines victorianos justo al lado del Ulster Museum. El Palm House de hierro y cristal del siglo XIX es una joya arquitectónica. El jardín Tropical Ravine es único en las islas. Entrada gratuita.</div><div class="ds-foot"><span class="tag tag-nature">Jardines</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Botanic+Gardens+Belfast+University+Road" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">16:30–18:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🌉</span><span class="ds-name">Paseo río Lagan</span></div><div class="ds-desc">El paseo fluvial revitalizado de Belfast: el Big Fish de azulejos, el Beacon of Hope y vistas del Belfast moderno. Perfecto para cerrar el día antes de la cena.</div><div class="ds-foot"><span class="tag tag-nature">Paseo libre</span><span class="tag tag-free">Gratuito</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Lagan+Towpath+Waterfront+Belfast" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">18:00–20:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏨</span><span class="ds-name">Hotel: ducha y preparar maletas</span></div></div></div>
+      <div class="ds-item food key-event"><div class="ds-time">20:00–22:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🎶</span><span class="ds-name">The Duke of York — Cena + Música</span></div><div class="ds-desc">Pub emblemático del Cathedral Quarter con callejón lleno de barriles decorativos. Música en directo la mayoría de noches. Comida tradicional: Irish stew, pie de carne y champ. La mejor cena de despedida de Belfast sin gastar una fortuna.</div><div class="ds-foot"><span class="tag tag-food">Pub + música</span><span class="price-tag">£9–14 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Duke+of+York+Commercial+Court+Belfast" target="_blank">📍 Maps</a></div></div></div>
+    </div>
+  </div></div>
+</div>
+
+<!-- DÍA 5 -->
+<div class="day-block" id="day5">
+  <div class="day-dot"></div>
+  <div class="day-header" onclick="toggleDay('day5')">
+    <div class="day-meta">
+      <div class="day-label">Día 5 · Martes 9 junio</div>
+      <div class="day-title">Mañana libre · Vuelo 18:00 · Salida máximo 15:00</div>
+      <div class="day-sum">Desayuno · Compras · Hotel maletas · BFS Europcar 15:30 · Vuelo 18:00</div>
+    </div>
+    <div class="day-chev">▾</div>
+  </div>
+  <div class="day-content"><div class="day-inner">
+    <div class="info-row">
+      <span class="chip">✈️ Vuelo: 18:00 BFS</span>
+      <span class="chip">🚗 Europcar: antes 15:30</span>
+      <span class="chip">⏱️ BFS: 25 min desde centro</span>
+      <span class="chip">🔴 Salida máx: 15:00</span>
+    </div>
+    <div class="day-schedule">
+      <div class="ds-item food"><div class="ds-time">08:30–09:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">☕</span><span class="ds-name">Clements Coffee — Desayuno de despedida</span></div><div class="ds-desc">Último desayuno en Belfast. Café, tostada con mantequilla y mermelada de fresa. Tranquilo y económico.</div><div class="ds-foot"><span class="tag tag-food">Desayuno</span><span class="price-tag">£3–5 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Clements+Coffee+Belfast" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item"><div class="ds-time">09:30–12:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🛍️</span><span class="ds-name">Últimas compras</span></div><div class="ds-desc">Whiskey Bushmills (barato en el propio aeropuerto también), mermeladas, tweed, souvenirs Titanic o GoT. Donegall Square y Victoria Square.</div><div class="ds-foot"><span class="tag tag-culture">Souvenirs</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Donegall+Square+Belfast+City+Centre" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item food"><div class="ds-time">12:30–13:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🥙</span><span class="ds-name">Gregg's Bakery — Almuerzo rápido</span></div><div class="ds-desc">La cadena de bakery más popular del Reino Unido. Sausage roll, pasty, bollería o sándwich caliente. Rapidísimo y muy barato. Hay varias sucursales en el centro de Belfast.</div><div class="ds-foot"><span class="tag tag-food">Almuerzo express</span><span class="price-tag">£2–4 p/p</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Greggs+Bakery+Belfast+city+centre" target="_blank">📍 Maps</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">13:00–15:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🏨</span><span class="ds-name">Hotel: recoger maletas + cargar el coche</span></div></div></div>
+      <div class="ds-item key-event"><div class="ds-time">15:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🔴</span><span class="ds-name">Salida del centro — HORA LÍMITE</span></div><div class="ds-desc">No salgáis después de las 15:00. El tráfico en la A57 al aeropuerto puede añadir tiempo.</div><div class="ds-foot"><span class="tag tag-drive">25 min hasta BFS</span></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">15:20</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">⛽</span><span class="ds-name">Gasolinera acceso BFS — Llenar depósito</span></div><div class="ds-desc">Gasolinera en la carretera de acceso al aeropuerto, antes de entrar al terminal. Devolución con nivel distinto al pactado → recargo.</div><div class="ds-foot"><span class="tag tag-drive">Obligatorio antes de Europcar</span></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">15:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">🚗</span><span class="ds-name">Devolución Europcar BFS</span></div><div class="ds-desc">Seguid señales "Car Rental Returns" dentro del aeropuerto. Entregad llaves, firmad la devolución. Guardad el recibo.</div><div class="ds-foot"><span class="tag tag-drive">Car Rental Returns</span><a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=Europcar+Belfast+International+Airport+BT29+4AB" target="_blank">📍 Maps BFS</a></div></div></div>
+      <div class="ds-item drive"><div class="ds-time">15:45–17:30</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">✅</span><span class="ds-name">Check-in + facturación + seguridad + embarque</span></div></div></div>
+      <div class="ds-item key-event"><div class="ds-time">18:00</div><div class="ds-body"><div class="ds-top"><span class="ds-ico">✈️</span><span class="ds-name">Vuelo de vuelta a España · ¡Hasta la próxima!</span></div></div></div>
+    </div>
+  </div></div>
+</div>
+
+</div><!-- /roadmap -->
+
+<!-- TIPS -->
+<div class="sh" id="tips">
+  <div class="ey">Consejos prácticos</div>
+  <h2>Esenciales para el viaje</h2>
+</div>
+<div class="tips-grid">
+  <div class="tip"><div class="ti">💷💶</div><h4>Dos monedas</h4><p>Belfast = libra esterlina (£). Dublín = euro (€). Usad Revolut o Wise para evitar comisiones de cambio.</p></div>
+  <div class="tip"><div class="ti">🌦️</div><h4>Tiempo en junio</h4><p>13–18°C, sol con nubes y algún chaparrón. Chubasquero ligero imprescindible. Costa Antrim: hace viento.</p></div>
+  <div class="tip"><div class="ti">🚗</div><h4>Izquierda siempre</h4><p>En todo el viaje (NI y República). Volante a la derecha. Máximo cuidado en rotondas los primeros días.</p></div>
+  <div class="tip"><div class="ti">📱</div><h4>Roaming</h4><p>Belfast (UK): puede costar extra según operadora. Dublín (UE): roaming gratuito. Comprobad vuestra tarifa.</p></div>
+  <div class="tip"><div class="ti">🎟️</div><h4>Reservad ya</h4><p>Titanic Belfast, Guinness Storehouse, Carrick-a-Rede, Castle Ward (si vais). Antes de salir de España.</p></div>
+  <div class="tip"><div class="ti">🗺️</div><h4>Maps offline</h4><p>Descarga Google Maps offline para NI e Irlanda antes de volar. Sin cobertura en Costa Antrim rural.</p></div>
+  <div class="tip"><div class="ti">⚡</div><h4>Adaptador tipo G</h4><p>Enchufes de 3 patas cuadradas en todo el viaje. Llevad adaptador desde España.</p></div>
+  <div class="tip"><div class="ti">🏥</div><h4>Emergencias</h4><p>999 en todo el viaje. Guardad el teléfono de vuestra aseguradora en el móvil antes de salir.</p></div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <div class="container"><p>Viaje a <span>Belfast & Dublín</span> · 5–9 Junio 2026 · ¡Sláinte! 🍀</p></div>
+</footer>
+
+<nav class="bottom-bar">
+  <a href="#top"><span class="bbi">🏠</span>Inicio</a>
+  <a href="#seguro"><span class="bbi">🚨</span>Seguro</a>
+  <a href="#alojamiento"><span class="bbi">🏨</span>Hotel</a>
+  <a href="#day1" id="bb-hoy"><span class="bbi">📅</span>Hoy</a>
+  <a href="#tips"><span class="bbi">💡</span>Tips</a>
+</nav>
+
+<script>
+  function toggleDay(id) {
+    const block = document.getElementById(id);
+    const content = block.querySelector('.day-content');
+    const isOpen = block.classList.contains('open');
+
+    // Close any other open day first
+    document.querySelectorAll('.day-block.open').forEach(b => {
+      if (b.id !== id) {
+        const c = b.querySelector('.day-content');
+        c.style.maxHeight = c.scrollHeight + 'px';
+        requestAnimationFrame(() => requestAnimationFrame(() => c.style.maxHeight = '0'));
+        b.classList.remove('open');
+      }
+    });
+
+    if (isOpen) {
+      content.style.maxHeight = content.scrollHeight + 'px';
+      requestAnimationFrame(() => requestAnimationFrame(() => content.style.maxHeight = '0'));
+      block.classList.remove('open');
+    } else {
+      block.classList.add('open');
+      content.style.maxHeight = content.scrollHeight + 'px';
+      content.addEventListener('transitionend', function h() {
+        if (block.classList.contains('open')) content.style.maxHeight = 'none';
+        content.removeEventListener('transitionend', h);
+      });
+    }
+  }
+  document.querySelectorAll('.day-block.open').forEach(b => b.querySelector('.day-content').style.maxHeight = 'none');
+
+  // Active nav
+  const navLinks = document.querySelectorAll('.day-nav a');
+  new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); });
+  }, { rootMargin: '-30% 0px -60% 0px' }).observe && document.querySelectorAll('[id]').forEach(s => new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id)); });
+  }, { rootMargin: '-25% 0px -65% 0px' }).observe(s));
+
+  // "Hoy" button
+  (function() {
+    const diff = Math.floor((new Date() - new Date('2026-06-05')) / 86400000);
+    const bbHoy = document.getElementById('bb-hoy');
+    if (diff >= 0 && diff <= 4) {
+      bbHoy.href = '#day' + (diff + 1);
+      bbHoy.querySelector('.bbi').textContent = '⭐';
+      bbHoy.childNodes[bbHoy.childNodes.length - 1].textContent = 'D' + (diff + 1) + ' HOY';
+    }
+  })();
+</script>
+</body>
+</html>
